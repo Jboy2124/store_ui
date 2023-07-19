@@ -3,10 +3,14 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      container: {
+        center: true,
+        padding: '3rem'
+      },
       colors: {
-        // primary: "#61B15A",
         primary: "#4BBB8B",
-        secondary: "#018383"
+        secondary: "#018383",
+        textPrimary: "#A47E3B"
       },
       fontFamily: {
         poppins: ["Poppins"]

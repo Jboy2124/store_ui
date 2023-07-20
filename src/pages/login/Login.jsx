@@ -1,15 +1,15 @@
 import React from "react";
 
-const AboutUs = () => {
+const Login = () => {
   return (
     <main className="bg-white">
       <section className="container">
         <div className="min-h-screen flex justify-center items-center">
-          <p>About Us</p>
+          <p>Login</p>
         </div>
       </section>
     </main>
   );
 };
 
-export default AboutUs;
+export default Login;

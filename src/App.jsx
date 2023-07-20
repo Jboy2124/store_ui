@@ -1,8 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Navbar from "./components/nav/Navbar";
 import Footer from "./components/footer/Footer";
 import Homepage from "./pages/home/Homepage";
+import PageNotFound from "./pages/utils/PageNotFound";
+const Login = React.lazy(() => import("./pages/login/Login"));
+const Register = React.lazy(() => import("./pages/register/Register"));
+const Brands = React.lazy(() => import("./pages/brands/Brands"));
 const AboutUs = React.lazy(() => import("./pages/about/AboutUs"));
 
 const App = () => {
@@ -22,7 +26,39 @@ const App = () => {
       element: <Layout />,
       children: [
         { path: "/", element: <Homepage /> },
-        { path: "about-us", element: <AboutUs /> },
+        {
+          path: "brands",
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Brands />
+            </Suspense>
+          ),
+        },
+        {
+          path: "about-us",
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <AboutUs />
+            </Suspense>
+          ),
+        },
+        {
+          path: "login",
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Login />
+            </Suspense>
+          ),
+        },
+        {
+          path: "register",
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Register />
+            </Suspense>
+          ),
+        },
+        { path: "*", element: <PageNotFound /> }
       ],
     },
   ]);

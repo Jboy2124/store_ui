@@ -7,11 +7,24 @@ export const navMenu = [
   {
     id: 2,
     name: "Brands",
-    link: "/",
+    link: "/brands",
   },
   {
     id: 3,
-    name: "Deals",
-    link: "/",
+    name: "About Us",
+    link: "/about-us",
+  },
+];
+
+export const profileMenu = [
+  {
+    id: 1,
+    name: "Login",
+    link: "/login",
+  },
+  {
+    id: 2,
+    name: "Register",
+    link: "/register",
   },
 ];

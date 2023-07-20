@@ -27,12 +27,12 @@ const Register = () => {
       password: data.password,
     });
 
-
+    console.log(response);
     reset();
   }
 
   return (
-    <main className="bg-white">
+    <main className="bg-slate-200">
       <section className="container">
         <form onSubmit={handleSubmit(submitFormInfo)}>
           <div className="min-h-screen flex justify-center items-center">

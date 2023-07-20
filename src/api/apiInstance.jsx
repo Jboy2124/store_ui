@@ -6,6 +6,7 @@ export const apiInstance = createApi({
     baseUrl: "http://localhost:8000",
     credentials: "include",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
   }),

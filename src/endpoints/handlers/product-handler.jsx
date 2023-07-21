@@ -6,8 +6,17 @@ const productEndpoints = apiInstance.injectEndpoints({
       query: () => "/products",
       providesTags: ["Products"],
     }),
+    addNewProduct: builder.mutation({
+      query: (data) => ({
+        url: "/product/new",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Products"],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useAllProductsQuery } = productEndpoints;
+export const { useAllProductsQuery, useAddNewProductMutation } =
+  productEndpoints;

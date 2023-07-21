@@ -32,7 +32,7 @@ const Register = () => {
   }
 
   return (
-    <main className="bg-slate-200">
+    <main className="bg-slate-100">
       <section className="container">
         <form onSubmit={handleSubmit(submitFormInfo)}>
           <div className="min-h-screen flex justify-center items-center">
@@ -127,7 +127,7 @@ const Register = () => {
                 </div>
               </div>
 
-              <div className="w-full bg-gradient-to-r from-[#205E61] to-[#3F979B]">
+              <div className="w-full bg-gradient-to-r from-[#40128B] to-[#9336B4]">
                 <div className="relative w-full px-14 mt-[110px]">
                   <input
                     name="email"

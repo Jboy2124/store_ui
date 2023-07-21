@@ -7,7 +7,7 @@ const Navbar = () => {
   const id = useSelector((state) => state.authenticate.id);
 
   return (
-    <nav className="bg-gradient-to-r from-[#205E61] to-[#3F979B] text-white text-[15px] font-poppins sticky top-0 z-20">
+    <nav className="bg-gradient-to-r from-[#40128B] to-[#9336B4] text-white text-[15px] font-poppins sticky top-0 z-20">
       <section className="container">
         <div className="h-[65px] flex justify-between items-center">
           <div className="flex justify-start items-center space-x-16">

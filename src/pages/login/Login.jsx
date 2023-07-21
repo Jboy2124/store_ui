@@ -27,7 +27,12 @@ const Login = () => {
       if (data !== undefined) {
         setTimeout(() => {
           dispatch(
-            auth({ id: data?.id, email: data?.email, user: data?.user })
+            auth({
+              id: data?.id,
+              email: data?.email,
+              user: data?.user,
+              role: data?.role,
+            })
           );
           reset();
           navigate("/");
@@ -40,12 +45,12 @@ const Login = () => {
   }, [data]);
 
   return (
-    <main className="bg-slate-200 font-poppins text-white">
+    <main className="bg-slate-100 font-poppins text-white">
       <section className="container">
         <div className="min-h-screen flex justify-center items-center">
           <form onSubmit={handleSubmit(handleLogin)}>
             <div className="relative w-[400px] h-[500px] bg-slate-200 ring-1 ring-slate-300 overflow-hidden shadow-2xl">
-              <div className="absolute w-full h-[150px] skew-y-[-6deg] top-[-25px]  bg-gradient-to-r from-[#205E61] to-[#3F979B]"></div>
+              <div className="absolute w-full h-[150px] skew-y-[-6deg] top-[-25px] bg-gradient-to-r from-[#40128B] to-[#9336B4]"></div>
               <div className="relative text-center w-full text-[20px] mt-10">
                 Login
               </div>

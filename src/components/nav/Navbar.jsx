@@ -23,7 +23,9 @@ const Navbar = () => {
                     to={items.link}
                     className={({ isActive }) => {
                       return `px-2 py-2 ${
-                        isActive ? "ring-1 ring-slate-300" : ""
+                        isActive
+                          ? " border-b-2 border-orange-500"
+                          : " border-b-2 border-transparent"
                       }`;
                     }}
                   >

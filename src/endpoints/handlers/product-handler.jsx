@@ -14,9 +14,20 @@ const productEndpoints = apiInstance.injectEndpoints({
       }),
       invalidatesTags: ["Products"],
     }),
+    prodImage: builder.mutation({
+      query: (data) => ({
+        url: "/product/image",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Products"],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useAllProductsQuery, useAddNewProductMutation } =
-  productEndpoints;
+export const {
+  useAllProductsQuery,
+  useAddNewProductMutation,
+  useProdImageMutation,
+} = productEndpoints;

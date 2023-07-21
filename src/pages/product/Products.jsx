@@ -31,7 +31,7 @@ const Products = () => {
         </div>
         <Outlet />
         <div className="min-h-screen flex justify-center items-start mt-10">
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-3 gap-5 mt-5 mb-14">
             {data.map((items, index) => {
               return (
                 <ProdCard

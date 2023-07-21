@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { styles } from "../../../utils/styles/styles";
 import { useForm } from "react-hook-form";
 import { useAddNewProductMutation } from "../../../endpoints/handlers/product-handler";
+import { useProdImageMutation } from "../../../endpoints/handlers/product-handler";
 
 const NewProduct = () => {
+  const [selectImage, setSelectImage] = useState("");
   const { register, handleSubmit, reset } = useForm();
   const [addNewProduct] = useAddNewProductMutation();
+  const [prodImage] = useProdImageMutation();
 
   function submitForm(data) {
-    addNewProduct(data);
+    const upload = new FormData();
+    upload.append("prodImage", selectImage);
+    prodImage(upload);
+    // addNewProduct(data);
     reset();
+  }
+
+  function handleSeletedImage(e) {
+    setSelectImage(e.target.files[0]);
   }
 
   return (
     <section className="bg-red-300 font-poppins">
       <div className="container">
-        <div className="h-[30vh]">
+        <div className="h-[40vh]">
           <form onSubmit={handleSubmit(submitForm)}>
             <div className="flex justify-evenly items-start">
               <div className="w-full my-7 flex flex-col justify-start items-center space-y-1">
@@ -64,6 +74,17 @@ const NewProduct = () => {
                 </div>
               </div>
               <div className="w-full my-7 flex flex-col justify-start items-center space-y-1">
+                <div className="w-full px-14">
+                  <input
+                    id="prodImage"
+                    name="prodImage"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="w-full px-2 py-2 text-[14px] outline-none"
+                    onChange={handleSeletedImage}
+                  />
+                </div>
                 <div className="w-full px-14">
                   <input
                     id="color"

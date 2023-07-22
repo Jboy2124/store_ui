@@ -4,11 +4,13 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { showAlert } from "../../utils/swal/sweet-alert";
 import { useAddProfileMutation } from "../../endpoints/handlers/register-handler";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { register, handleSubmit, reset } = useForm();
   const [addProfile, { data: response = [], isError, error, isSuccess }] =
     useAddProfileMutation();
+  const navigate = useNavigate();
 
   function submitFormInfo(data) {
     if (!data.email && !data.password)
@@ -32,13 +34,16 @@ const Register = () => {
   }
 
   return (
-    <main className="bg-slate-100">
+    <main className="bg-slate-100 font-poppins">
       <section className="container">
         <form onSubmit={handleSubmit(submitFormInfo)}>
           <div className="min-h-screen flex justify-center items-center">
             <div className="w-[720px] h-[450px] ring-1 ring-slate-300 bg-slate-200 shadow-2xl flex justify-evenly">
               <div className="w-full">
-                <div className="relative w-full px-14 mt-14">
+                <p className="p-2 text-[12px] text-gray-600">
+                  <span className="text-orange-600">mobile</span>shop
+                </p>
+                <div className="relative w-full px-14 mt-12">
                   <input
                     name="fname"
                     id="fname"
@@ -128,7 +133,7 @@ const Register = () => {
               </div>
 
               <div className="w-full bg-gradient-to-r from-[#40128B] to-[#9336B4]">
-                <div className="relative w-full px-14 mt-[110px]">
+                <div className="relative w-full px-14 mt-[100px]">
                   <input
                     name="email"
                     id="email"
@@ -180,10 +185,29 @@ const Register = () => {
                   </label>
                 </div>
 
-                <div className="w-full flex justify-center items-center mt-16">
+                <div className="w-full flex flex-col justify-center items-center mt-16">
                   <button type="submit" className={styles.btnSubmit}>
                     Register
                   </button>
+                  <p className="text-[12px] text-white font-poppins pt-2">
+                    Already had a account?{" "}
+                    <span
+                      className="text-orange-500 hover:underline underline-offset-4 cursor-pointer"
+                      onClick={() => navigate("/login")}
+                    >
+                      Login
+                    </span>{" "}
+                    here.
+                  </p>
+                  <p className="text-[12px] text-white font-poppins">
+                    Navigate to{" "}
+                    <span
+                      className="text-orange-500 hover:underline underline-offset-4 cursor-pointer"
+                      onClick={() => navigate("/")}
+                    >
+                      Homepage
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>

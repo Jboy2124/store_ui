@@ -53,25 +53,25 @@ const App = () => {
             </Suspense>
           ),
         },
-        {
-          path: "login",
-          element: (
-            <Suspense fallback={<div>Loading...</div>}>
-              <Login />
-            </Suspense>
-          ),
-        },
-        {
-          path: "register",
-          element: (
-            <Suspense fallback={<div>Loading...</div>}>
-              <Register />
-            </Suspense>
-          ),
-        },
-        { path: "*", element: <PageNotFound /> },
       ],
     },
+    {
+      path: "login",
+      element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Login />
+        </Suspense>
+      ),
+    },
+    {
+      path: "register",
+      element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Register />
+        </Suspense>
+      ),
+    },
+    { path: "*", element: <PageNotFound /> },
   ]);
 
   return <RouterProvider router={routes} />;

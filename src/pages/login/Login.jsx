@@ -51,7 +51,8 @@ const Login = () => {
           <form onSubmit={handleSubmit(handleLogin)}>
             <div className="relative w-[400px] h-[500px] bg-slate-200 ring-1 ring-slate-300 overflow-hidden shadow-2xl">
               <div className="absolute w-full h-[150px] skew-y-[-6deg] top-[-25px] bg-gradient-to-r from-[#40128B] to-[#9336B4]"></div>
-              <div className="relative text-center w-full text-[20px] mt-10">
+              <div className="relative text-[12px] pt-2 pl-2"><span className="text-orange-500">mobile</span>shop</div>
+              <div className="relative text-center w-full text-[20px] mt-7">
                 Login
               </div>
               <p className="relative text-center text-[13px]">
@@ -94,21 +95,33 @@ const Login = () => {
                   </div>
                   <p className="text-[11px] mt-2 text-end px-14">
                     Forgot{" "}
-                    <span className="hover:underline underline-offset-4 cursor-pointer">
+                    <span className="hover:underline underline-offset-4 text-orange-600 cursor-pointer">
                       password?
                     </span>
                   </p>
 
-                  <div className=" mt-14 text-center">
+                  <div className=" mt-12 text-center">
                     <button type="submit" className={styles.btnSubmit}>
                       Login
                     </button>
                     <p className="text-[11px] mt-2">
                       Don't have an account yet?{" "}
-                      <span className="hover:underline underline-offset-4 cursor-pointer">
+                      <span
+                        className="hover:underline underline-offset-4 text-orange-600 cursor-pointer"
+                        onClick={() => navigate("/register")}
+                      >
                         Register
                       </span>{" "}
                       here.
+                    </p>
+                    <p className="text-[11px]">
+                      Navigate to{" "}
+                      <span
+                        className="hover:underline underline-offset-4 text-orange-600 cursor-pointer"
+                        onClick={() => navigate("/")}
+                      >
+                        Homepage
+                      </span>
                     </p>
                   </div>
                 </div>

@@ -12,6 +12,14 @@ const NewProduct = () => {
 
   function submitForm(data) {
     const upload = new FormData();
+    // const httpHeaders = new httpHeaders({
+    //   encType: "multipart/form-data",
+    // });
+
+    // const options = {
+    //   headers: httpHeaders,
+    // };
+
     upload.append("prodImage", selectImage);
     prodImage(upload);
     // addNewProduct(data);

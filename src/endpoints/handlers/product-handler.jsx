@@ -11,6 +11,7 @@ const productEndpoints = apiInstance.injectEndpoints({
         url: "/product/new",
         method: "POST",
         body: data,
+        // headers: options,
       }),
       invalidatesTags: ["Products"],
     }),

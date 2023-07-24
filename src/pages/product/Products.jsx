@@ -1,49 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Filter from "../../components/filter/Filter";
-import { useAllProductsQuery } from "../../endpoints/handlers/product-handler";
+import {
+  useAllProductsQuery,
+  useGetTotalProductsQuery,
+} from "../../endpoints/handlers/product-handler";
 import ProdCard from "../../components/cards/prod-card/ProdCard";
-import { styles } from "../../utils/styles/styles";
-import { useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
 
 const Products = () => {
-  const { data = [], isSuccess } = useAllProductsQuery();
-  const { role } = useSelector((state) => state.authenticate.role);
-  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [response, setResponse] = useState([]);
+  const { data: total = [], refetch } = useGetTotalProductsQuery();
+  const { data = [] } = useAllProductsQuery(page);
 
-  // useEffect(() => {
-  //   console.log(role);
-  // }, [data]);
+  function handleClickLoadMore(e) {
+    e.preventDefault();
+    setPage((val) => val + 1);
+  }
+
+  useEffect(() => {
+    setResponse([...response, ...data]);
+  }, [data]);
 
   return (
-    <main className="bg-slate-100">
+    <main className="bg-slate-100 font-poppins">
       <Filter />
       <section className="container">
-        <div className="mt-5">
-          <button
-            className={`${styles.btnSubmit} ${
-              role === "ADMIN" ? "block" : "hidden"
-            }`}
-            onClick={() => navigate("/products/add")}
-          >
-            Create Product
-          </button>
-        </div>
-        <Outlet />
-        <div className="min-h-screen flex justify-center items-start mt-10">
-          <div className="grid grid-cols-3 gap-5 mt-5 mb-14">
-            {data.map((items, index) => {
+        <div className="min-h-[80vh] flex justify-center items-start">
+          <div className="grid grid-cols-4 gap-5 mt-10">
+            {response.map((items, index) => {
               return (
                 <ProdCard
                   key={index}
+                  image={items?.image}
                   brand={items?.brand}
                   model={items?.model}
                   desc={items?.desc}
+                  rom={items?.rom}
+                  ram={items?.ram}
                   price={items?.inventory?.amount}
                 />
               );
             })}
           </div>
+        </div>
+        <div className="h-[15vh] flex justify-center items-center">
+          {response.length < total ? (
+            <button
+              type="button"
+              className={`px-24 py-2 bg-orange-600 text-white text-[14px]`}
+              onClick={(e) => handleClickLoadMore(e)}
+            >
+              Load more...
+            </button>
+          ) : (
+            <p className="text-center">No more data to display</p>
+          )}
         </div>
       </section>
     </main>

@@ -49,6 +49,7 @@ const Register = () => {
                     id="fname"
                     type="text"
                     placeholder="."
+                    autoComplete="false"
                     className="peer w-full border-b-2 text-[13px] placeholder-transparent border-gray-300 outline-none bg-transparent py-2"
                     {...register("fname")}
                   />
@@ -66,6 +67,7 @@ const Register = () => {
                     id="lname"
                     type="text"
                     placeholder="."
+                    autoComplete="false"
                     className="peer w-full border-b-2 text-[13px] placeholder-transparent border-gray-300 outline-none bg-transparent py-2"
                     {...register("lname")}
                   />
@@ -82,6 +84,7 @@ const Register = () => {
                     id="gender"
                     name="gender"
                     value="gender"
+                    autoComplete="false"
                     className="w-full border-b-2 text-[13px] placeholder-transparent border-gray-300 outline-none bg-transparent py-2"
                     placeholder="."
                     {...register("gender")}
@@ -103,6 +106,7 @@ const Register = () => {
                     id="address"
                     type="text"
                     placeholder="."
+                    autoComplete="false"
                     className="peer w-full border-b-2 text-[13px] placeholder-transparent border-gray-300 outline-none bg-transparent py-2"
                     {...register("address")}
                   />
@@ -120,6 +124,7 @@ const Register = () => {
                     id="contact"
                     type="text"
                     placeholder="."
+                    autoComplete="false"
                     className="peer w-full border-b-2 text-[13px] placeholder-transparent border-gray-300 outline-none bg-transparent py-2"
                     {...register("contactNo")}
                   />
@@ -157,6 +162,7 @@ const Register = () => {
                     id="password"
                     type="password"
                     placeholder="."
+                    autoComplete="false"
                     className="peer w-full border-b-2 text-[13px] text-white placeholder-transparent border-white outline-none bg-transparent py-2"
                     {...register("password")}
                   />
@@ -174,6 +180,7 @@ const Register = () => {
                     id="confirmPassword"
                     type="password"
                     placeholder="."
+                    autoComplete="false"
                     className="peer w-full border-b-2 text-[13px] text-white placeholder-transparent border-white outline-none bg-transparent py-2"
                     {...register("confirmPassword")}
                   />

@@ -51,7 +51,9 @@ const Login = () => {
           <form onSubmit={handleSubmit(handleLogin)}>
             <div className="relative w-[400px] h-[500px] bg-slate-200 ring-1 ring-slate-300 overflow-hidden shadow-2xl">
               <div className="absolute w-full h-[150px] skew-y-[-6deg] top-[-25px] bg-gradient-to-r from-[#40128B] to-[#9336B4]"></div>
-              <div className="relative text-[12px] pt-2 pl-2"><span className="text-orange-500">mobile</span>shop</div>
+              <div className="relative text-[12px] pt-2 pl-2">
+                <span className="text-orange-500">mobile</span>shop
+              </div>
               <div className="relative text-center w-full text-[20px] mt-7">
                 Login
               </div>
@@ -66,6 +68,7 @@ const Login = () => {
                       id="email"
                       type="email"
                       placeholder="."
+                      autoComplete="false"
                       className="peer w-full border-b-2 text-[13px] placeholder-transparent border-gray-300 outline-none bg-transparent py-2"
                       {...register("email")}
                     />
@@ -83,6 +86,7 @@ const Login = () => {
                       id="password"
                       type="password"
                       placeholder="."
+                      autoComplete="false"
                       className="peer w-full border-b-2 text-[13px] placeholder-transparent border-gray-300 outline-none bg-transparent py-2"
                       {...register("password")}
                     />

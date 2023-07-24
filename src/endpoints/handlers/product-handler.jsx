@@ -3,9 +3,15 @@ import { apiInstance } from "../../api/apiInstance";
 const productEndpoints = apiInstance.injectEndpoints({
   endpoints: (builder) => ({
     allProducts: builder.query({
-      query: () => "/products",
+      query: (pageNo) => `/products?page=${pageNo}`,
       providesTags: ["Products"],
     }),
+
+    getTotalProducts: builder.query({
+      query: () => "/products/total",
+      providesTags: ["Products"],
+    }),
+
     addNewProduct: builder.mutation({
       query: (data) => ({
         url: "/product/new",
@@ -15,6 +21,7 @@ const productEndpoints = apiInstance.injectEndpoints({
       }),
       invalidatesTags: ["Products"],
     }),
+
     prodImage: builder.mutation({
       query: (data) => ({
         url: "/product/image",
@@ -28,6 +35,7 @@ const productEndpoints = apiInstance.injectEndpoints({
 });
 
 export const {
+  useGetTotalProductsQuery,
   useAllProductsQuery,
   useAddNewProductMutation,
   useProdImageMutation,

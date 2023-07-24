@@ -4,7 +4,6 @@ import Navbar from "./components/nav/Navbar";
 import Footer from "./components/footer/Footer";
 import Homepage from "./pages/home/Homepage";
 import PageNotFound from "./pages/utils/PageNotFound";
-import NewProduct from "./pages/product/sub/NewProduct";
 const Products = React.lazy(() => import("./pages/product/Products"));
 const Login = React.lazy(() => import("./pages/login/Login"));
 const Register = React.lazy(() => import("./pages/register/Register"));
@@ -35,7 +34,6 @@ const App = () => {
               <Products />
             </Suspense>
           ),
-          children: [{ path: "add", element: <NewProduct /> }],
         },
         {
           path: "brands",

@@ -1,4 +1,5 @@
 import React from "react";
+import { currencyFormat } from "../../../utils/format/intl-format";
 
 const ProdCard = ({ image, model, brand, desc, rom, ram, price }) => {
   return (
@@ -8,7 +9,7 @@ const ProdCard = ({ image, model, brand, desc, rom, ram, price }) => {
           src={`http://localhost:8000/${image}`}
           alt="image pic"
           width={200}
-          className="p-1"
+          className="p-1 bg-transparent"
         />
       </div>
       <div className="w-full px-3 flex justify-start items-center space-x-1 text-[12px] font-poppins font-semibold mt-2">
@@ -19,7 +20,9 @@ const ProdCard = ({ image, model, brand, desc, rom, ram, price }) => {
       <p className="w-full px-3 text-[11px] font-poppins truncate">
         ROM: {rom} RAM: {ram}
       </p>
-      <p className="px-3 text-[11px] font-poppins text-orange-600">{price}</p>
+      <p className="px-3 text-[11px] font-semibold font-poppins text-orange-600">
+        {currencyFormat(price)}
+      </p>
     </section>
   );
 };

@@ -12,6 +12,11 @@ const productEndpoints = apiInstance.injectEndpoints({
       providesTags: ["Products"],
     }),
 
+    getFeaturedProducts: builder.query({
+      query: (feat = 1) => `/products/feature/:${feat}`,
+      providesTags: ["Products"],
+    }),
+
     addNewProduct: builder.mutation({
       query: (data) => ({
         url: "/product/new",
@@ -35,6 +40,7 @@ const productEndpoints = apiInstance.injectEndpoints({
 });
 
 export const {
+  useGetFeaturedProductsQuery,
   useGetTotalProductsQuery,
   useAllProductsQuery,
   useAddNewProductMutation,

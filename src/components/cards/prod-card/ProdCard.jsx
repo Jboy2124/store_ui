@@ -2,12 +2,13 @@ import React from "react";
 import { currencyFormat } from "../../../utils/format/intl-format";
 
 const ProdCard = ({ image, model, brand, desc, rom, ram, price }) => {
+  const img = import.meta.env.VITE_BASE_URL + "/" + image;
   return (
     <section className="bg-slate-200 w-[200px] h-[350px] ring-1 ring-slate-400 hover:shadow-2xl transition-all duration-300">
       <div className="">
         <img
-          src={`http://localhost:8000/${image}`}
-          alt="image pic"
+          src={img}
+          alt="Product Image"
           width={200}
           className="p-1 bg-transparent"
         />

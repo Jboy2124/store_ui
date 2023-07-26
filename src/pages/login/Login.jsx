@@ -25,6 +25,8 @@ const Login = () => {
     if (data?.message) return Swal.fire(showAlert.error(data.message));
     else {
       if (data !== undefined) {
+        sessionStorage.setItem("session.id", data.id);
+        sessionStorage.setItem("session.user", data.user);
         setTimeout(() => {
           dispatch(
             auth({
@@ -40,6 +42,7 @@ const Login = () => {
       }
     }
   }
+
   useEffect(() => {
     handleResponseData();
   }, [data]);

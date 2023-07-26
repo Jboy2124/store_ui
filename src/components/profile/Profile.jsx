@@ -1,10 +1,10 @@
 import React from "react";
 import { BsCart2 } from "react-icons/bs";
 
-const Profile = () => {
+const Profile = ({ user }) => {
   const count = 0;
   return (
-    <div className="flex justify-center items-center space-x-6">
+    <div className="flex justify-center items-center space-x-8">
       <div className="relative flex justify-center items-center">
         <span className="absolute p-2 hover:bg-gray-100 hover:bg-opacity-20 rounded-full duration-300 cursor-pointer peer">
           <BsCart2 size={22} className=" text-white" />
@@ -20,7 +20,12 @@ const Profile = () => {
         </div>
       </div>
 
-      <div>Profile</div>
+      <div className="font-semibold">
+        Hi,{" "}
+        <span className="hover:underline underline-offset-4 cursor-pointer">
+          {user}
+        </span>
+      </div>
     </div>
   );
 };

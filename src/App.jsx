@@ -4,6 +4,7 @@ import Navbar from "./components/nav/Navbar";
 import Footer from "./components/footer/Footer";
 import Homepage from "./pages/home/Homepage";
 import PageNotFound from "./pages/utils/PageNotFound";
+import ProductDisplay from "./pages/product/sub/ProductDisplay";
 const Products = React.lazy(() => import("./pages/product/Products"));
 const Login = React.lazy(() => import("./pages/login/Login"));
 const Register = React.lazy(() => import("./pages/register/Register"));
@@ -34,6 +35,10 @@ const App = () => {
               <Products />
             </Suspense>
           ),
+        },
+        {
+          path: "/products/details",
+          element: <ProductDisplay />,
         },
         {
           path: "brands",

@@ -9,13 +9,8 @@ import ProdCard from "../../components/cards/prod-card/ProdCard";
 const Products = () => {
   const [page, setPage] = useState(1);
   const [response, setResponse] = useState([]);
-  const { data: total = [], refetch } = useGetTotalProductsQuery();
+  const { data: total = [] } = useGetTotalProductsQuery();
   const { data = [] } = useAllProductsQuery(page);
-
-  function handleClickLoadMore(e) {
-    e.preventDefault();
-    setPage((val) => val + 1);
-  }
 
   useEffect(() => {
     setResponse([...response, ...data]);
@@ -31,6 +26,7 @@ const Products = () => {
               return (
                 <ProdCard
                   key={index}
+                  id={items?.prodId}
                   image={items?.image}
                   brand={items?.brand}
                   model={items?.model}
@@ -48,12 +44,12 @@ const Products = () => {
             <button
               type="button"
               className={`px-24 py-2 bg-orange-600 text-white text-[14px]`}
-              onClick={(e) => handleClickLoadMore(e)}
+              onClick={() => setPage((pageNum) => pageNum + 1)}
             >
               Load more...
             </button>
           ) : (
-            <p className="text-center">No more data to display</p>
+            <p className="text-center text-[13px]">No more data to display</p>
           )}
         </div>
       </section>

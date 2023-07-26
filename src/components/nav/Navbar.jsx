@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { navMenu } from "../../utils/const/nav-menu";
 import { NavLink } from "react-router-dom";
 import Profile from "../profile/Profile";
+import ProfileAuth from "../profile/ProfileAuth";
 
 const Navbar = () => {
+  const [sessionId, setSessionId] = useState("");
+  const [sessionUser, setSessionUser] = useState("");
+
+  useEffect(() => {
+    setSessionId(sessionStorage.getItem("session.id"));
+    setSessionUser(sessionStorage.getItem("session.user"));
+  }, []);
+
   return (
     <nav className="bg-gradient-to-r from-[#40128B] to-[#9336B4] text-white text-[15px] font-poppins sticky top-0 z-20">
       <section className="container">
@@ -34,11 +43,9 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="">
-            {/* <ul className="flex items-center space-x-6">
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/register">Register</NavLink>
-            </ul> */}
-            <Profile />
+            {sessionId ? <Profile user={sessionUser} /> : <ProfileAuth />}
+            {/* <ProfileAuth /> */}
+            {/* <Profile /> */}
           </div>
         </div>
       </section>

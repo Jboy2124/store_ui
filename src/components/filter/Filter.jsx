@@ -3,7 +3,7 @@ import { BsSearch } from "react-icons/bs";
 
 const Filter = () => {
   return (
-    <section className="bg-slate-200 text-[14px] font-poppins sticky top-[65px]">
+    <section className="bg-slate-200 text-[14px] font-poppins sticky top-[65px] border-b-2 border-b-slate-300">
       <div className="container">
         <div className="h-[55px] flex justify-between items-center">
           <div className=" space-x-2 flex items-center">

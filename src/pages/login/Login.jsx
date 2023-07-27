@@ -37,7 +37,7 @@ const Login = () => {
             })
           );
           reset();
-          navigate("/");
+          navigate(-1);
         }, 200);
       }
     }

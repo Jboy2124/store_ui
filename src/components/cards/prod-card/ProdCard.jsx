@@ -1,16 +1,17 @@
 import React from "react";
 import { currencyFormat } from "../../../utils/format/intl-format";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate, useLocation } from "react-router-dom";
 
 const ProdCard = (data) => {
   const img = import.meta.env.VITE_BASE_URL + "/" + data.image;
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleClickImage(e, data) {
     e.preventDefault();
     const params = { id: data.id };
     navigate({
-      pathname: "/products/details",
+      pathname: `${location.pathname}/details`,
       search: createSearchParams(params).toString(),
     });
   }
@@ -22,7 +23,7 @@ const ProdCard = (data) => {
           src={img}
           alt="Product Image"
           width={200}
-          className="p-1"
+          className="p-1 hover:cursor-pointer"
           onClick={(e) => handleClickImage(e, { id: data.id })}
         />
       </div>

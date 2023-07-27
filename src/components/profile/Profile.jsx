@@ -1,12 +1,22 @@
 import React from "react";
 import { BsCart2 } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const Profile = ({ user }) => {
-  const count = 0;
+  const count = useSelector((state) => state.cart.basket);
+  // const count = ca;
+
+  function handleClickCart(e) {
+    e.preventDefault();
+    alert(`Cart Value: ${count}`);
+  }
   return (
     <div className="flex justify-center items-center space-x-8">
       <div className="relative flex justify-center items-center">
-        <span className="absolute p-2 hover:bg-gray-100 hover:bg-opacity-20 rounded-full duration-300 cursor-pointer peer">
+        <span
+          className="absolute p-2 hover:bg-gray-100 hover:bg-opacity-20 rounded-full duration-300 cursor-pointer peer"
+          onClick={(e) => handleClickCart(e)}
+        >
           <BsCart2 size={22} className=" text-white" />
         </span>
         <div

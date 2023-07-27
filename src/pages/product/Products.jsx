@@ -4,25 +4,35 @@ import {
   useAllProductsQuery,
   useGetTotalProductsQuery,
 } from "../../endpoints/handlers/product-handler";
+import { useSearchParams } from "react-router-dom";
 import ProdCard from "../../components/cards/prod-card/ProdCard";
+import Pagination from "../../components/paginate/Pagination";
+import { scrollTop } from "../../utils/scroll/ScrollToTop";
 
 const Products = () => {
-  const [page, setPage] = useState(1);
-  const [response, setResponse] = useState([]);
+  const initialPage = 1;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParams = searchParams.get("page") || initialPage;
   const { data: total = [] } = useGetTotalProductsQuery();
-  const { data = [] } = useAllProductsQuery(page);
+  const { data = [] } = useAllProductsQuery(pageParams);
+
+  function handlePageOnChange(event) {
+    setSearchParams({ page: event.selected + 1 });
+    scrollTop(0);
+  }
 
   useEffect(() => {
-    setResponse([...response, ...data]);
-  }, [data]);
+    scrollTop(0);
+    setSearchParams({ page: pageParams });
+  }, []);
 
   return (
     <main className="bg-slate-100 font-poppins">
       <Filter />
-      <section className="container">
-        <div className="min-h-[80vh] flex justify-center items-start">
+      <section className="container py-10">
+        <div className="min-h-screen flex justify-center items-start">
           <div className="grid grid-cols-4 gap-5 mt-10">
-            {response.map((items, index) => {
+            {data.map((items, index) => {
               return (
                 <ProdCard
                   key={index}
@@ -39,18 +49,11 @@ const Products = () => {
             })}
           </div>
         </div>
-        <div className="h-[15vh] flex justify-center items-center">
-          {response.length < total ? (
-            <button
-              type="button"
-              className={`px-24 py-2 bg-orange-600 text-white text-[14px]`}
-              onClick={() => setPage((pageNum) => pageNum + 1)}
-            >
-              Load more...
-            </button>
-          ) : (
-            <p className="text-center text-[13px]">No more data to display</p>
-          )}
+        <div className="w-full flex justify-center items-center">
+          <Pagination
+            total={Number(total)}
+            handlePageClick={handlePageOnChange}
+          />
         </div>
       </section>
     </main>

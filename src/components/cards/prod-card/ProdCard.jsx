@@ -17,7 +17,7 @@ const ProdCard = (data) => {
   }
 
   return (
-    <section className="bg-slate-200 w-[200px] h-[350px] ring-1 ring-slate-400 hover:shadow-2xl transition-all duration-300">
+    <section className="bg-slate-200 w-[200px] h-[330px] ring-1 ring-slate-400 hover:shadow-2xl transition-all duration-300">
       <div className="">
         <img
           src={img}

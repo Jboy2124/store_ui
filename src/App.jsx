@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homepage from "./pages/home/Homepage";
 import PageNotFound from "./pages/utils/PageNotFound";
 import ProductDisplay from "./pages/product/sub/ProductDisplay";
+import { useInitialLoadingQuery } from "./endpoints/handlers/initial-load-handler";
 
 //Layouts
 import RootLayout from "./utils/layouts/RootLayout";
@@ -15,6 +16,8 @@ const Brands = React.lazy(() => import("./pages/brands/Brands"));
 const AboutUs = React.lazy(() => import("./pages/about/AboutUs"));
 
 const App = () => {
+  const { data = [] } = useInitialLoadingQuery();
+
   const routes = createBrowserRouter([
     {
       path: "/",

@@ -16,7 +16,7 @@ const Brands = React.lazy(() => import("./pages/brands/Brands"));
 const AboutUs = React.lazy(() => import("./pages/about/AboutUs"));
 
 const App = () => {
-  const { data = [] } = useInitialLoadingQuery();
+  // const { data = [] } = useInitialLoadingQuery();
 
   const routes = createBrowserRouter([
     {

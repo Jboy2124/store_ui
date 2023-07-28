@@ -32,6 +32,15 @@ const productEndpoints = apiInstance.injectEndpoints({
       invalidatesTags: ["Products"],
     }),
 
+    addToDBCart: builder.mutation({
+      query: (data) => ({
+        url: "/product/cart",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Products"],
+    }),
+
     prodImage: builder.mutation({
       query: (data) => ({
         url: "/product/image",
@@ -51,4 +60,5 @@ export const {
   useAddNewProductMutation,
   useProdImageMutation,
   useGetProductsByIdQuery,
+  useAddToDBCartMutation,
 } = productEndpoints;

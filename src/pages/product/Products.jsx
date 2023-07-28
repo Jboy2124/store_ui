@@ -13,8 +13,9 @@ const Products = () => {
   const initialPage = 1;
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParams = searchParams.get("page") || initialPage;
-  const { data: total = [] } = useGetTotalProductsQuery();
+  const { data: total = [] || 0 } = useGetTotalProductsQuery();
   const { data = [] } = useAllProductsQuery(pageParams);
+  const [currPage, setCurrPage] = useState(Number(pageParams) - 1);
 
   function handlePageOnChange(event) {
     setSearchParams({ page: event.selected + 1 });
@@ -23,7 +24,7 @@ const Products = () => {
 
   useEffect(() => {
     scrollTop(0);
-    setSearchParams({ page: pageParams });
+    setSearchParams({ page: Number(pageParams) });
   }, []);
 
   return (
@@ -52,6 +53,7 @@ const Products = () => {
         <div className="w-full flex justify-center items-center">
           <Pagination
             total={Number(total)}
+            currentPage={currPage}
             handlePageClick={handlePageOnChange}
           />
         </div>

@@ -7,13 +7,15 @@ export const authSlice = createSlice({
     email: "",
     user: "",
     role: "",
+    cart: [],
   },
   reducers: {
     auth: (state, action) => {
       (state.id = action.payload),
         (state.email = action.payload),
         (state.user = action.payload),
-        (state.role = action.payload);
+        (state.role = action.payload),
+        (state.cart = action.payload);
     },
   },
 });

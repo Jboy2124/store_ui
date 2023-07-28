@@ -34,6 +34,7 @@ const Login = () => {
               email: data?.email,
               user: data?.user,
               role: data?.role,
+              cart: data?.cart,
             })
           );
           reset();

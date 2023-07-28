@@ -1,6 +1,6 @@
 import ReactPaginate from "react-paginate";
 
-const Pagination = ({ total, handlePageClick }) => {
+const Pagination = ({ total, currentPage, handlePageClick }) => {
   const totalPage = isNaN(total) ? 0 : total;
 
   return (
@@ -11,9 +11,12 @@ const Pagination = ({ total, handlePageClick }) => {
       pageRangeDisplayed={5}
       pageCount={totalPage}
       onPageChange={handlePageClick}
+      forcePage={currentPage}
       className="flex items-center space-x-2 text-[15px]"
-      activeClassName="bg-orange-700"
-      pageClassName="w-[25px] p-[2px] text-center bg-orange-600 text-white"
+      activeClassName="bg-orange-700 text-white"
+      previousClassName="pr-1"
+      nextClassName="pl-1"
+      pageClassName="w-[35px] h-[35px] rounded flex justify-center items-center ring-1 ring-orange-600 ring-inset"
     />
   );
 };

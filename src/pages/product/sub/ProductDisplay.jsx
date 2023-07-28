@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useGetProductsByIdQuery } from "../../../endpoints/handlers/product-handler";
+import {
+  useGetProductsByIdQuery,
+  useAddToDBCartMutation,
+} from "../../../endpoints/handlers/product-handler";
 import ImageContainer from "../../../components/container/ImageContainer";
 import { currencyFormat } from "../../../utils/format/intl-format";
 import { scrollTop } from "../../../utils/scroll/ScrollToTop";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../endpoints/slices/cart-slice";
 
 const ProductDisplay = () => {
-  const [cartVal, setCartValue] = useState(0);
   const [searchParams] = useSearchParams();
   const paramsId = searchParams.get("id");
+  const [cartVal, setCartValue] = useState(0);
   const { data = [] } = useGetProductsByIdQuery(paramsId);
+  const [addToDBCart] = useAddToDBCartMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.authenticate.cart);
 
   useEffect(() => {
     scrollTop(0);
   }, []);
+
+  console.log("cartId", cart);
 
   function handleAddToCart(e, prodId) {
     e.preventDefault();
@@ -28,6 +35,12 @@ const ProductDisplay = () => {
     } else {
       setCartValue((val) => val + 1);
       dispatch(addToCart(cartVal));
+      addToDBCart({
+        userId: userId,
+        prodId: prodId,
+        currentCount: 1,
+        operation: "increment",
+      });
     }
   }
 

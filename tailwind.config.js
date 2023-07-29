@@ -5,17 +5,17 @@ export default {
     extend: {
       container: {
         center: true,
-        padding: '3rem'
+        padding: "3rem",
       },
       colors: {
         primary: "#4BBB8B",
         secondary: "#018383",
-        textPrimary: "#A47E3B"
+        textPrimary: "#A47E3B",
       },
       fontFamily: {
-        poppins: ["Poppins"]
-      }
+        poppins: ["Poppins"],
+      },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };

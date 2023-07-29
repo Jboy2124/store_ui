@@ -3,15 +3,35 @@ import { navMenu } from "../../utils/const/nav-menu";
 import { NavLink } from "react-router-dom";
 import Profile from "../profile/Profile";
 import ProfileAuth from "../profile/ProfileAuth";
+import { db } from "../../db/index";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const [sessionId, setSessionId] = useState("");
-  const [sessionUser, setSessionUser] = useState("");
+  const [statusVerified, setStatusVerified] = useState("");
+  const verifiedSelector = useSelector((state) => state.status.verified);
+  const [loggedUser, setLoggedUser] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
 
   useEffect(() => {
-    setSessionId(sessionStorage.getItem("session.id"));
-    setSessionUser(sessionStorage.getItem("session.user"));
-  }, []);
+    setStatusVerified(verifiedSelector);
+    fetchUser();
+  }, [statusVerified]);
+
+  const fetchUser = async () => {
+    let total = 0;
+    const user = await db.personal.toArray();
+    const cart = await db.cart.toArray();
+
+    for (let i = 0; i < cart.length; i++) {
+      total += cart[i].count;
+    }
+
+    if (user && cart) {
+      setLoggedUser(user);
+      setCartTotal(total);
+      setStatusVerified("");
+    }
+  };
 
   return (
     <nav className="bg-gradient-to-r from-[#40128B] to-[#9336B4] text-white text-[15px] font-poppins sticky top-0 z-20">
@@ -43,9 +63,11 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="">
-            {sessionId ? <Profile user={sessionUser} /> : <ProfileAuth />}
-            {/* <ProfileAuth /> */}
-            {/* <Profile /> */}
+            {loggedUser[0]?.profId ? (
+              <Profile user={loggedUser[0]?.user} cartCount={cartTotal} />
+            ) : (
+              <ProfileAuth />
+            )}
           </div>
         </div>
       </section>

@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { styles } from "../../utils/styles/styles";
 import { useLoginMutation } from "../../endpoints/handlers/auth-handler";
 import { useDispatch } from "react-redux";
-import { auth } from "../../endpoints/slices/auth-slice";
+import { verifyStatus } from "../../endpoints/slices/logged-status-slice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { showAlert } from "../../utils/swal/sweet-alert";
+import { db } from "../../db";
 
 const Login = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -21,22 +22,25 @@ const Login = () => {
     login(data);
   }
 
-  function handleResponseData() {
-    if (data?.message) return Swal.fire(showAlert.error(data.message));
+  async function handleResponseData() {
+    if (data?.message) Swal.fire(showAlert.error(data.message));
     else {
       if (data !== undefined) {
-        sessionStorage.setItem("session.id", data.id);
-        sessionStorage.setItem("session.user", data.user);
+        await db.personal.add({
+          profId: data.id,
+          userId: data.userId,
+          user: data.user,
+        });
+
+        for (let i = 0; i < data.cart.length; i++) {
+          await db.cart.add({
+            prodId: data.cart[i].prodId,
+            count: data.cart[i].count,
+          });
+        }
+
         setTimeout(() => {
-          dispatch(
-            auth({
-              id: data?.id,
-              email: data?.email,
-              user: data?.user,
-              role: data?.role,
-              cart: data?.cart,
-            })
-          );
+          dispatch(verifyStatus(true));
           reset();
           navigate(-1);
         }, 200);

@@ -7,40 +7,46 @@ import {
 import ImageContainer from "../../../components/container/ImageContainer";
 import { currencyFormat } from "../../../utils/format/intl-format";
 import { scrollTop } from "../../../utils/scroll/ScrollToTop";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../../endpoints/slices/cart-slice";
+import { useDispatch } from "react-redux";
+import { db } from "../../../db";
+import { verifyStatus } from "../../../endpoints/slices/logged-status-slice";
 
 const ProductDisplay = () => {
+  const [user, setUser] = useState([]);
   const [searchParams] = useSearchParams();
   const paramsId = searchParams.get("id");
-  const [cartVal, setCartValue] = useState(0);
   const { data = [] } = useGetProductsByIdQuery(paramsId);
   const [addToDBCart] = useAddToDBCartMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.authenticate.cart);
 
   useEffect(() => {
     scrollTop(0);
+    getUser();
   }, []);
 
-  console.log("cartId", cart);
+  const getUser = async () => {
+    const info = await db.personal.toArray();
+    if (info) setUser(info);
+  };
 
-  function handleAddToCart(e, prodId) {
+  async function handleAddToCart(e, prodId) {
     e.preventDefault();
-    const sessionId = sessionStorage.getItem("session.id");
 
-    if (!sessionId) {
+    if (!user[0]?.profId) {
       navigate("/login");
     } else {
-      setCartValue((val) => val + 1);
-      dispatch(addToCart(cartVal));
+      await db.cart.add({
+        prodId: prodId,
+        count: 1,
+      });
       addToDBCart({
-        userId: userId,
+        userId: user[0]?.userId,
         prodId: prodId,
         currentCount: 1,
         operation: "increment",
       });
+      dispatch(verifyStatus(true));
     }
   }
 
@@ -49,7 +55,11 @@ const ProductDisplay = () => {
       <div className="container">
         <div className="min-h-screen flex justify-evenly items-start pt-20">
           <div className="w-full flex justify-center items-center">
-            <ImageContainer imagePath={data.image} width={500} height={0} />
+            <ImageContainer
+              imagePath={data && data.image}
+              width={500}
+              height={0}
+            />
           </div>
           <div className="w-full mt-12 flex flex-col justify-start items-start text-[20px]">
             <p className="">SKU#: {data?.sku}</p>

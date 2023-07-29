@@ -8,6 +8,7 @@ import { useInitialLoadingQuery } from "./endpoints/handlers/initial-load-handle
 //Layouts
 import RootLayout from "./utils/layouts/RootLayout";
 import ProductLayout from "./utils/layouts/ProductLayout";
+import ProductCart from "./pages/product/sub/ProductCart";
 
 const Products = React.lazy(() => import("./pages/product/Products"));
 const Login = React.lazy(() => import("./pages/login/Login"));
@@ -37,6 +38,7 @@ const App = () => {
               ),
             },
             { path: "details", element: <ProductDisplay /> },
+            { path: "cart", element: <ProductCart /> },
           ],
         },
         {

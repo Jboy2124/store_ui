@@ -3,14 +3,18 @@ import { BsCart2 } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { verifyStatus } from "../../endpoints/slices/logged-status-slice";
 import { db } from "../../db";
+import { useNavigate } from "react-router-dom";
 
 const Profile = ({ user, cartCount }) => {
   const count = useSelector((state) => state.cart.basket);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleClickCart(e) {
     e.preventDefault();
-    alert("Cart Clicked");
+    navigate({
+      pathname: "/products/cart",
+    });
   }
 
   async function handleUserClicked(e) {

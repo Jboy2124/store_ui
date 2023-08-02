@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BsCart2 } from "react-icons/bs";
-import { useSelector, useDispatch } from "react-redux";
-import { verifyStatus } from "../../endpoints/slices/logged-status-slice";
-import { db } from "../../db";
+
 import { useNavigate } from "react-router-dom";
 
-const Profile = ({ user, cartCount }) => {
-  const count = useSelector((state) => state.cart.basket);
-  const dispatch = useDispatch();
+const Profile = ({ user, cartCount, handleAccountLogout }) => {
   const navigate = useNavigate();
 
   function handleClickCart(e) {
@@ -15,13 +11,6 @@ const Profile = ({ user, cartCount }) => {
     navigate({
       pathname: "/products/cart",
     });
-  }
-
-  async function handleUserClicked(e) {
-    e.preventDefault();
-    await db.personal.clear();
-    await db.cart.clear();
-    dispatch(verifyStatus(false));
   }
 
   return (
@@ -60,7 +49,7 @@ const Profile = ({ user, cartCount }) => {
             {/* <li className="">
               <a></a>
             </li> */}
-            <li onClick={(e) => handleUserClicked(e)}>
+            <li onClick={handleAccountLogout}>
               <a>Logout</a>
             </li>
           </ul>

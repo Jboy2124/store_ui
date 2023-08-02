@@ -9,11 +9,14 @@ export const loggedStatusSlice = createSlice({
     verifyStatus: (state, action) => {
       state.verified = action.payload;
     },
+    resetStatus: (state, action) => {
+      state.verified = false;
+    },
   },
 });
 
 const { actions, reducer } = loggedStatusSlice;
 
-export const { verifyStatus } = actions;
+export const { verifyStatus, resetStatus } = actions;
 
 export default reducer;

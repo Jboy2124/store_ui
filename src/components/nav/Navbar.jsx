@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { navMenu } from "../../utils/const/nav-menu";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Profile from "../profile/Profile";
 import ProfileAuth from "../profile/ProfileAuth";
 import { db } from "../../db/index";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { resetStatus } from "../../endpoints/slices/logged-status-slice";
 
 const Navbar = () => {
-  const [statusVerified, setStatusVerified] = useState("");
-  const verifiedSelector = useSelector((state) => state.status.verified);
+  const selector = useSelector((state) => state.status.verified);
   const [loggedUser, setLoggedUser] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setStatusVerified(verifiedSelector);
     fetchUser();
-  }, [statusVerified]);
+  }, [selector]);
 
   const fetchUser = async () => {
     let total = 0;
@@ -29,9 +30,18 @@ const Navbar = () => {
     if (user && cart) {
       setLoggedUser(user);
       setCartTotal(total);
-      setStatusVerified("");
     }
+    dispatch(resetStatus());
   };
+
+  async function handleLogout() {
+    await db.personal.clear();
+    await db.cart.clear();
+    fetchUser();
+    setTimeout(() => {
+      navigate("/");
+    }, 100);
+  }
 
   return (
     <nav className="bg-gradient-to-r from-[#40128B] to-[#9336B4] text-white text-[15px] font-poppins sticky top-0 z-20">
@@ -64,7 +74,11 @@ const Navbar = () => {
           </div>
           <div className="">
             {loggedUser[0]?.profId ? (
-              <Profile user={loggedUser[0]?.user} cartCount={cartTotal} />
+              <Profile
+                user={loggedUser[0]?.user}
+                cartCount={cartTotal}
+                handleAccountLogout={handleLogout}
+              />
             ) : (
               <ProfileAuth />
             )}

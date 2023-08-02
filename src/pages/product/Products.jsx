@@ -15,7 +15,6 @@ const Products = () => {
   const pageParams = searchParams.get("page") || initialPage;
   const { data: total = [] || 0 } = useGetTotalProductsQuery();
   const { data = [] } = useAllProductsQuery(pageParams);
-  const [currPage, setCurrPage] = useState(Number(pageParams) - 1);
 
   function handlePageOnChange(event) {
     setSearchParams({ page: event.selected + 1 });
@@ -50,10 +49,10 @@ const Products = () => {
             })}
           </div>
         </div>
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center mt-20">
           <Pagination
             total={Number(total)}
-            currentPage={currPage}
+            currentPage={Number(pageParams)}
             handlePageClick={handlePageOnChange}
           />
         </div>

@@ -7,8 +7,8 @@ import {
 import ImageContainer from "../../../components/container/ImageContainer";
 import { currencyFormat } from "../../../utils/format/intl-format";
 import { scrollTop } from "../../../utils/scroll/ScrollToTop";
-import { useDispatch } from "react-redux";
 import { db } from "../../../db";
+import { useDispatch } from "react-redux";
 import { verifyStatus } from "../../../endpoints/slices/logged-status-slice";
 
 const ProductDisplay = () => {
@@ -36,10 +36,20 @@ const ProductDisplay = () => {
     if (!user[0]?.profId) {
       navigate("/login");
     } else {
-      await db.cart.add({
-        prodId: prodId,
-        count: 1,
-      });
+      const isExisting = await db.cart.where({ prodId: prodId }).toArray();
+
+      if (isExisting.length > 0) {
+        const cnt = isExisting[0]?.count;
+        await db.cart.update(isExisting[0]?.idCart, {
+          count: cnt + 1,
+        });
+      } else {
+        await db.cart.add({
+          prodId: prodId,
+          count: 1,
+        });
+      }
+
       addToDBCart({
         userId: user[0]?.userId,
         prodId: prodId,
@@ -77,9 +87,6 @@ const ProductDisplay = () => {
               </span>
             </p>
             <div className="flex justify-evenly items-center space-x-5 mt-10">
-              <button className="px-16 py-2 ring-1 ring-orange-600 ring-inset">
-                Favorites
-              </button>
               <button
                 className="px-16 py-2 bg-orange-600 text-white"
                 onClick={(e) => handleAddToCart(e, paramsId)}

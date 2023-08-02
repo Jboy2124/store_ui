@@ -4,6 +4,8 @@ const productEndpoints = apiInstance.injectEndpoints({
   endpoints: (builder) => ({
     allProducts: builder.query({
       query: (pageNo) => `/products?page=${pageNo}`,
+      transformResponse: (response) =>
+        response.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
       providesTags: ["Products"],
     }),
 
@@ -27,7 +29,6 @@ const productEndpoints = apiInstance.injectEndpoints({
         url: "/product/new",
         method: "POST",
         body: data,
-        // headers: options,
       }),
       invalidatesTags: ["Products"],
     }),
@@ -35,6 +36,15 @@ const productEndpoints = apiInstance.injectEndpoints({
     addToDBCart: builder.mutation({
       query: (data) => ({
         url: "/product/cart",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Products"],
+    }),
+
+    getProductListWhereIn: builder.mutation({
+      query: (data) => ({
+        url: "/product/list/includes",
         method: "POST",
         body: data,
       }),
@@ -61,4 +71,5 @@ export const {
   useProdImageMutation,
   useGetProductsByIdQuery,
   useAddToDBCartMutation,
+  useGetProductListWhereInMutation,
 } = productEndpoints;

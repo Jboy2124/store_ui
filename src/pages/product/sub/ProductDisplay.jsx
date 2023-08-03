@@ -19,6 +19,12 @@ const ProductDisplay = () => {
   const [addToDBCart] = useAddToDBCartMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const inv = data.inventory;
+  let amount = 0;
+
+  if (inv !== undefined) {
+    amount = inv[0].amount;
+  }
 
   useEffect(() => {
     scrollTop(0);
@@ -83,12 +89,12 @@ const ProductDisplay = () => {
             <p>
               Price:{" "}
               <span className="text-orange-600">
-                {currencyFormat(data?.inventory?.amount)}
+                {currencyFormat(Number(amount))}
               </span>
             </p>
             <div className="flex justify-evenly items-center space-x-5 mt-10">
               <button
-                className="px-16 py-2 bg-orange-600 text-white"
+                className="px-16 py-2 bg-orange-600 text-white text-[15px] hover:bg-orange-700 duration-300 active:scale-90"
                 onClick={(e) => handleAddToCart(e, paramsId)}
               >
                 Add to Cart

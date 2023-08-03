@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../../db";
-import { useGetProductListWhereInMutation } from "../../../endpoints/handlers/product-handler";
+import {
+  useGetProductListWhereInMutation,
+  useAddToDBCartMutation,
+} from "../../../endpoints/handlers/product-handler";
 import { useUpdateCartMutation } from "../../../endpoints/handlers/cart-handler";
+import { useNewTransactionMutation } from "../../../endpoints/handlers/transaction-handler";
 import { currencyFormat } from "../../../utils/format/intl-format";
 import { useDispatch } from "react-redux";
 import { verifyStatus } from "../../../endpoints/slices/logged-status-slice";
-import { BsTrash, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsTrash, BsCaretUpFill, BsCaretDownFill } from "react-icons/bs";
 
 const ProductCart = () => {
   const [btnCheckout, setBtnCheckout] = useState(true);
@@ -14,9 +18,12 @@ const ProductCart = () => {
   const [codChecked, setCodChecked] = useState(false);
   const [gcashChecked, setGcashChecked] = useState(false);
   const [cardChecked, setCardChecked] = useState(false);
+  const [qty, setQty] = useState(0);
   const [getProductListWhereIn, { data = [] }] =
     useGetProductListWhereInMutation();
   const [updateCart] = useUpdateCartMutation();
+  const [addToDBCart] = useAddToDBCartMutation();
+  const [newTransaction] = useNewTransactionMutation();
   const dispatch = useDispatch();
 
   //fetching the products from the cart
@@ -24,6 +31,7 @@ const ProductCart = () => {
   async function cartItems() {
     const cartList = await db.cart.toArray();
     const users = await db.personal.toArray();
+
     let arr = [];
 
     if (cartList.length > 0) {
@@ -118,7 +126,7 @@ const ProductCart = () => {
       itemSelected.forEach((items) => {
         for (let i = 0; i < data.length; i++) {
           if (items === data[i].prodId) {
-            total += data[i].inventory.amount * data[i].cart[0].count;
+            total += data[i].inventory[0].amount * data[i].cart[0].count;
           } else {
             total += 0;
           }
@@ -166,6 +174,66 @@ const ProductCart = () => {
     } else setBtnCheckout(false);
   }, [orderSummary]);
 
+  function handleClickedAddQty(e, id) {
+    e.preventDefault();
+    changeQty(id, "add");
+  }
+
+  function handleClickedMinusQty(e, id) {
+    e.preventDefault();
+    changeQty(id, "minus");
+  }
+
+  async function changeQty(id, opType) {
+    const user = await db.personal.toArray();
+    const isExisting = await db.cart.where({ prodId: id }).toArray();
+
+    if (isExisting.length > 0) {
+      const cnt = isExisting[0]?.count;
+      await db.cart.update(isExisting[0]?.idCart, {
+        count: opType === "add" ? cnt + 1 : cnt === 1 ? 1 : cnt - 1,
+      });
+
+      addToDBCart({
+        userId: user[0]?.userId,
+        prodId: id,
+        currentCount: 1,
+        operation: opType === "add" ? "increment" : "decrement",
+      });
+    }
+    dispatch(verifyStatus(true));
+    cartItems();
+  }
+
+  async function handlePlaceOrder(e) {
+    e.preventDefault();
+    let payload;
+    let arr = [];
+    const profile = await db.personal.toArray();
+    const user = profile[0].userId;
+
+    itemSelected.forEach((id) => {
+      for (let i = 0; i < data.length; i++) {
+        if (id === data[i].prodId) {
+          arr.push({
+            prodId: id,
+            qty: data[i].cart[0]?.count,
+            price: data[i].inventory[0]?.amount,
+            shipping: 45,
+          });
+        }
+      }
+    });
+
+    payload = {
+      userId: user,
+      obj: arr,
+    };
+
+    newTransaction(payload);
+    handleRemoveFromSelectAll(e);
+  }
+
   return (
     <main className="bg-slate-100 font-poppins">
       <div className="container px-24">
@@ -199,6 +267,9 @@ const ProductCart = () => {
               </div>
               {data.length > 0 ? (
                 data.map((items, index) => {
+                  // value={items?.cart[0]?.count}
+                  // setQty(items?.cart[0]?.count);
+                  let q = items?.cart[0]?.count;
                   return (
                     <div
                       key={index}
@@ -239,8 +310,8 @@ const ProductCart = () => {
                       <div className="w-[140px] h-[130px] flex flex-col items-end py-3">
                         <p className="text-[18px] text-orange-600 font-semibold pr-2">
                           {currencyFormat(
-                            items?.inventory?.amount
-                              ? items?.inventory.amount
+                            items?.inventory[0]?.amount
+                              ? items?.inventory[0]?.amount
                               : 0
                           )}
                         </p>
@@ -248,20 +319,33 @@ const ProductCart = () => {
                           <button
                             type="button"
                             className="px-3 py-1 bg-slate-100 flex justify-center items-center hover:ring-1 ring-slate-300 ring-inset active:bg-slate-200"
+                            onClick={(e) =>
+                              handleClickedMinusQty(e, items?.prodId)
+                            }
                           >
-                            -
+                            <BsCaretDownFill
+                              size={20}
+                              className="text-slate-400"
+                            />
                           </button>
                           <input
                             type="text"
-                            value={items?.cart[0]?.count}
+                            // value={items?.cart[0]?.count}
+                            value={q}
                             className="w-[50px] py-1 text-center outline-none hover:ring-1 ring-slate-300 ring-inset"
                             onChange={handleChangeQty}
                           />
                           <button
                             type="button"
                             className="px-3 py-1 bg-slate-100 flex justify-center items-center hover:ring-1 ring-slate-300 ring-inset active:bg-slate-200"
+                            onClick={(e) =>
+                              handleClickedAddQty(e, items?.prodId)
+                            }
                           >
-                            +
+                            <BsCaretUpFill
+                              size={20}
+                              className="text-slate-400"
+                            />
                           </button>
                         </div>
                         <div className="w-full flex justify-end px-2 mt-3 space-x-2 text-gray-400">
@@ -385,6 +469,7 @@ const ProductCart = () => {
                       type="button"
                       className="px-20 py-2 bg-orange-600 text-white active:bg-orange-700 duration-300 text-[15px] disabled:bg-slate-300 disabled:text-gray-700"
                       disabled={btnCheckout}
+                      onClick={(e) => handlePlaceOrder(e)}
                     >
                       Place your Order(s)
                     </button>

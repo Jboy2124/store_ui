@@ -4,8 +4,8 @@ const cartEndpoints = apiInstance.injectEndpoints({
   endpoints: (builder) => ({
     updateCart: builder.mutation({
       query: (data) => ({
-        url: `/product/cart/update?userId=${data.userId}&prodId=${data.prodId}`,
-        method: "PATCH",
+        url: "/product/cart/delete",
+        method: "DELETE",
         body: data,
       }),
       invalidatesTags: ["Cart"],

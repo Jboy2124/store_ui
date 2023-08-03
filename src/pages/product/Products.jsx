@@ -26,6 +26,8 @@ const Products = () => {
     setSearchParams({ page: Number(pageParams) });
   }, []);
 
+  // console.log(data?.inventory[0].amount);
+
   return (
     <main className="bg-slate-100 font-poppins">
       <Filter />
@@ -43,7 +45,7 @@ const Products = () => {
                   desc={items?.desc}
                   rom={items?.rom}
                   ram={items?.ram}
-                  price={items?.inventory?.amount}
+                  price={items?.inventory[0]?.amount}
                 />
               );
             })}

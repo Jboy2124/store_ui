@@ -6,11 +6,13 @@ import ProfileAuth from "../profile/ProfileAuth";
 import { db } from "../../db/index";
 import { useSelector, useDispatch } from "react-redux";
 import { resetStatus } from "../../endpoints/slices/logged-status-slice";
+import { useLogoutMutation } from "../../endpoints/handlers/auth-handler";
 
 const Navbar = () => {
   const selector = useSelector((state) => state.status.verified);
   const [loggedUser, setLoggedUser] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
+  const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,6 +40,7 @@ const Navbar = () => {
     await db.personal.clear();
     await db.cart.clear();
     fetchUser();
+    logout();
     setTimeout(() => {
       navigate("/");
     }, 100);

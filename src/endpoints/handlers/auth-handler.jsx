@@ -10,8 +10,15 @@ const authEndpoints = apiInstance.injectEndpoints({
       }),
       invalidatesTags: ["Auth"],
     }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "POST",
+        body: {},
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useLoginMutation } = authEndpoints;
+export const { useLoginMutation, useLogoutMutation } = authEndpoints;

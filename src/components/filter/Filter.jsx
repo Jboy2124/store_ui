@@ -25,6 +25,12 @@ const Filter = () => {
               placeholder="specify..."
               className="w-[250px] px-2 py-[6px] text-[13px] outline-none bg-slate-100 ring-1 ring-slate-300 ring-inset"
             />
+            <button
+              type="button"
+              className="px-2 py-[6px] text-[13px] text-gray-500  ring-1 ring-slate-300 ring-inset bg-slate-300 duration-200"
+            >
+              Find
+            </button>
           </div>
           <div className="flex">
             <input

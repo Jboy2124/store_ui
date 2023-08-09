@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import {
   useGetProductsByIdQuery,
   useAddToDBCartMutation,
@@ -19,6 +19,7 @@ const ProductDisplay = () => {
   const [addToDBCart] = useAddToDBCartMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const inv = data.inventory;
   let amount = 0;
 
@@ -40,7 +41,7 @@ const ProductDisplay = () => {
     e.preventDefault();
 
     if (!user[0]?.profId) {
-      navigate("/login");
+      navigate("/login", { state: { from: location } });
     } else {
       const isExisting = await db.cart.where({ prodId: prodId }).toArray();
 
@@ -69,16 +70,16 @@ const ProductDisplay = () => {
   return (
     <section className="bg-slate-100 font-poppins">
       <div className="container">
-        <div className=" h-[60vh] p-20 shadow-2xl">
-          <div className="min-h-screen flex justify-evenly items-start pt-20">
-            <div className="w-full flex justify-center items-center">
+        <div className="min-h-screen flex justify-center items-center">
+          <div className="bg-white h-[80vh] w-[80vw] shadow-xl rounded-2xl flex justify-evenly items-start">
+            <div className="w-full flex justify-center items-center pt-5">
               <ImageContainer
                 imagePath={data && data.image}
                 width={500}
                 height={0}
               />
             </div>
-            <div className="w-full mt-12 flex flex-col justify-start items-start text-[20px]">
+            <div className="w-full mt-14 flex flex-col justify-start items-start text-[20px]">
               <p className="">SKU#: {data?.sku}</p>
               <p className="font-semibold text-[25px]">Brand: {data?.brand}</p>
               <p className="">

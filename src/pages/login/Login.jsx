@@ -4,7 +4,7 @@ import { styles } from "../../utils/styles/styles";
 import { useLoginMutation } from "../../endpoints/handlers/auth-handler";
 import { useDispatch } from "react-redux";
 import { verifyStatus } from "../../endpoints/slices/logged-status-slice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { showAlert } from "../../utils/swal/sweet-alert";
 import { db } from "../../db";
@@ -14,6 +14,9 @@ const Login = () => {
   const [login, { data }] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  let fromLocation = location.state?.from?.pathname;
+  console.log(fromLocation);
 
   function handleLogin(data) {
     if (!data.email || !data.password)
@@ -42,7 +45,8 @@ const Login = () => {
         setTimeout(() => {
           dispatch(verifyStatus(true));
           reset();
-          navigate(-1);
+          if (fromLocation === "/products/details") navigate(-1);
+          else navigate("/");
         }, 200);
       }
     }

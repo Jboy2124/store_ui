@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <section className="relative bg-slate-100 text-white font-poppins">
       <div className="h-[70vh]">
-        <div className="absolute bg-gradient-to-r from-[#40128B] to-[#9336B4] w-full h-full skew-y-[-4deg] top-[-70px]"></div>
+        <div className="absolute bg-gradient-to-r from-[#40128B] to-[#9336B4] w-full h-full skew-y-[-5deg] top-[-70px]"></div>
         <div className="container">
           <div className="relative flex justify-evenly items-start">
             <div className="w-full h-[70vh] flex flex-col justify-center items-center">
@@ -17,11 +17,11 @@ const Hero = () => {
               </span>
               <button className={`${styles.btnSubmit} mt-5`}>Shop now</button>
             </div>
-            <div className="w-full flex justify-center items-center mt-10">
+            <div className="w-full flex justify-center items-center mt-14">
               <img
                 src={PhoneImg}
                 alt="hero-image"
-                className="h-[70vh] w-full"
+                className="h-[60vh] w-full"
               />
             </div>
           </div>

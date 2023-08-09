@@ -14,9 +14,9 @@ export const navMenu = [
     name: "Brands",
     link: "/brands",
   },
-  {
-    id: 4,
-    name: "About Us",
-    link: "/about-us",
-  },
+  // {
+  //   id: 4,
+  //   name: "About Us",
+  //   link: "/about-us",
+  // },
 ];

@@ -209,6 +209,14 @@ const ProductCart = () => {
     e.preventDefault();
     let payload;
     let arr = [];
+    let mode = "";
+
+    if (codChecked) mode = "COD";
+
+    if (gcashChecked) mode = "GCash";
+
+    if (cardChecked) mode = "Card";
+
     const profile = await db.personal.toArray();
     const user = profile[0].userId;
 
@@ -227,6 +235,7 @@ const ProductCart = () => {
 
     payload = {
       userId: user,
+      modeOfPayment: mode,
       obj: arr,
     };
 

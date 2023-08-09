@@ -236,11 +236,11 @@ const ProductCart = () => {
 
   return (
     <main className="bg-slate-100 font-poppins">
-      <div className="container px-24">
-        <div className="min-h-screen flex justify-between items-start px-32 py-5 space-x-2">
+      <div className="container">
+        <div className="min-h-screen flex justify-between items-start py-5 space-x-2">
           <div className="w-full h-screen overflow-y-auto py-5 bg-slate-200">
             <div className="flex flex-col items-center gap-2">
-              <div className="w-[600px] h-[40px] bg-white ring-1 ring-slate-300 ring-inset flex justify-between items-center">
+              <div className="w-full h-[40px]  bg-white ring-1 ring-slate-300 ring-inset flex justify-between items-center">
                 <div className="flex justify-center items-center px-2 space-x-1">
                   <input
                     type="checkbox"
@@ -273,7 +273,7 @@ const ProductCart = () => {
                   return (
                     <div
                       key={index}
-                      className="w-[600px] h-[130px] bg-white ring-1 ring-slate-300 ring-inset flex items-center"
+                      className="w-full h-[130px] bg-white ring-1 ring-slate-300 ring-inset flex items-center"
                     >
                       <div className="mx-3">
                         <input
@@ -296,11 +296,11 @@ const ProductCart = () => {
                         />
                       </div>
                       <div className="w-[300px] h-[130px] flex flex-col items-start py-3">
-                        <div className="flex font-semibold text-[18px] space-x-2">
+                        <div className="flex font-semibold text-[17px] space-x-2">
                           <p>{items?.brand}</p>
-                          <p>{items?.model}</p>
-                          <p>{items?.desc}</p>
+                          <p className="text-start">{items?.model}</p>
                         </div>
+                        <p>{items?.desc}</p>
                         <p className="text-[13px]">{items?.color}</p>
                         <div className="flex text-[12px] space-x-5">
                           <p>ROM: {items?.rom}</p>
@@ -308,7 +308,7 @@ const ProductCart = () => {
                         </div>
                       </div>
                       <div className="w-[140px] h-[130px] flex flex-col items-end py-3">
-                        <p className="text-[18px] text-orange-600 font-semibold pr-2">
+                        <p className="text-[17px] text-orange-600 font-semibold pr-2">
                           {currencyFormat(
                             items?.inventory[0]?.amount
                               ? items?.inventory[0]?.amount
